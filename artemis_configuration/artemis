@@ -49,6 +49,12 @@ fi
 JAVA_ARGS="-XX:+UseParallelGC -XX:+AggressiveOpts -XX:+UseFastAccessorMethods -Xms512M -Xmx1024M"
 CLASSPATH="$ARTEMIS_HOME/lib/artemis-boot.jar"
 
+# Add prometheus jmx exporter agent
+if [ "$AMQ_PROMETHEUS_AGENT" = "true" ]; then
+  echo "Using prometheus jmx exporter agent to collect metrics. Configuration loaded from $ARTEMIS_HOME/etc/"
+  PROMEXPORTER_OPTS="-Xbootclasspath/p:$ARTEMIS_HOME/etc -javaagent:$ARTEMIS_HOME/lib/jmx_prometheus_javaagent-0.31.jar=9779:$ARTEMIS_HOME/etc/promconfig.yml"
+fi
+
 # OS specific support.
 cygwin=false;
 darwin=false;
@@ -83,12 +89,6 @@ if [ -z "$JAVACMD" ] ; then
   else
     JAVACMD=java
   fi
-fi
-
-# Add prometheus jmx exporter agent
-if [ "$AMQ_PROMETHEUS_AGENT" = "true" ]; then
-  echo "Using prometheus jmx exporter agent to collect metrics. Configuration loaded from $ARTEMIS_INSTANCE/etc/"
-  PROMEXPORTER_OPTS="-Xbootclasspath/p:$ARTEMIS_INSTANCE/etc -javaagent:$ARTEMIS_INSTANCE/lib/jmx_prometheus_javaagent-0.31.jar=9779:$ARTEMIS_INSTANCE/etc/promconfig.yml"
 fi
 
 if $cygwin ; then
