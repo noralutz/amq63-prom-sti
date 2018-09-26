@@ -8,7 +8,7 @@ if [ $rc -eq 0 ]; then
 
 echo "After successful assembling"
 PROMCONF=/tmp/src/prometheus_jmx_exporter_configuration
-ARTCONF=/tmp/src/artemis_configuration
+#ARTCONF=/tmp/src/artemis_configuration
 SRCLIB=/tmp/src/lib
 
 if [ -d ${PROMCONF} ]; then
