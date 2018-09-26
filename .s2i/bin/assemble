@@ -5,12 +5,18 @@ if [ "${SCRIPT_DEBUG}" = "true" ] ; then
     echo "Script debugging is enabled, allowing bash commands and their arguments to be printed as they are executed"
 fi
 
-SRCCONF=/tmp/src/configuration
+PROMCONF=/tmp/src/prometheus_jmx_exporter_configuration
+ARTCONF=/tmp/src/artemis_configuration
 SRCLIB=/tmp/src/lib
 
-if [ -d ${SRCCONF} ]; then
-  echo "Copying config files from project..."
-  cp -v ${SRCCONF}/* $AMQ_HOME/conf/
+if [ -d ${PROMCONF} ]; then
+  echo "Copying artemis config files from project..."
+  cp -v ${SRCCONF}/* $AMQ_HOME/etc/
+fi
+
+if [ -d ${ARTCONF} ]; then
+  echo "Copying artemis config files from project..."
+  cp -v ${SRCCONF}/* $AMQ_HOME/bin/
 fi
 
 if [ -d ${SRCLIB} ]; then
