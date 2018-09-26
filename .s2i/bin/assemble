@@ -16,10 +16,10 @@ if [ -d ${PROMCONF} ]; then
   cp -v ${PROMCONF}/promconfig.yml $AMQ_HOME/etc/
 fi
 
-#if [ -d ${ARTCONF} ]; then
-#  echo "Copying artemis config files from project..."
-#  cp -v ${ARTCONF}/artemis $AMQ_HOME/bin/
-#fi
+if [ -d ${ARTCONF} ]; then
+  echo "Copying artemis config files from project..."
+  cp -v ${ARTCONF}/artemis $AMQ_HOME/bin/
+fi
 
 if [ -d ${SRCLIB} ]; then
   echo "Copying jars from project..."
