@@ -2,8 +2,8 @@
 echo "Before running application"
 ARTCONF=/tmp/src/artemis_configuration
 ARTEMIS_INSTANCE=/home/jboss/broker
-if [ -d ${ARTCONF} ]; then
-  echo "Copying artemis config files from project..."
-  cp -v ${ARTCONF}/artemis $ARTEMIS_INSTANCE/bin/
-fi
+#if [ -d ${ARTCONF} ]; then
+#  echo "Copying artemis config files from project..."
+#  cp -v ${ARTCONF}/artemis $ARTEMIS_INSTANCE/bin/
+#fi
 exec /usr/local/s2i/run

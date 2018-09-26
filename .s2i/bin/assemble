@@ -12,10 +12,10 @@ ARTCONF=/tmp/src/artemis_configuration
 ARTEMIS_INSTANCE=/home/jboss/broker
 SRCLIB=/tmp/src/lib
 
-if [ -d ${PROMCONF} ]; then
-  echo "Copying artemis config files from project..."
-  cp -v ${PROMCONF}/promconfig.yml $ARTEMIS_INSTANCE/etc/
-fi
+#if [ -d ${PROMCONF} ]; then
+#  echo "Copying artemis config files from project..."
+#  cp -v ${PROMCONF}/promconfig.yml $ARTEMIS_INSTANCE/etc/
+#fi
 
 #if [ -d ${ARTCONF} ]; then
 #  echo "Copying artemis config files from project..."
