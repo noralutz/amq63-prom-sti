@@ -26,8 +26,6 @@ if [ -d ${SRCLIB} ]; then
   cp -v ${SRCLIB}/* $AMQ_HOME/lib/
 fi
 
-exit 0
-
 else
     echo "After failed assembling"
 fi
