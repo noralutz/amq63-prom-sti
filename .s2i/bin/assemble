@@ -1,10 +1,12 @@
-#!/bin/sh
+#!/bin/bash
+echo "Before assembling"
 
-if [ "${SCRIPT_DEBUG}" = "true" ] ; then
-    set -x
-    echo "Script debugging is enabled, allowing bash commands and their arguments to be printed as they are executed"
-fi
+/usr/local/s2i/assemble
+rc=$?
 
+if [ $rc -eq 0 ]; then
+
+echo "After successful assembling"
 PROMCONF=/tmp/src/prometheus_jmx_exporter_configuration
 ARTCONF=/tmp/src/artemis_configuration
 SRCLIB=/tmp/src/lib
@@ -24,8 +26,10 @@ if [ -d ${SRCLIB} ]; then
   cp -v ${SRCLIB}/* $AMQ_HOME/lib/
 fi
 
-
-# Remove java tmp perf data dir owned by 185
-rm -rf /tmp/hsperfdata_jboss
-
 exit 0
+
+else
+    echo "After failed assembling"
+fi
+
+exit $rc
