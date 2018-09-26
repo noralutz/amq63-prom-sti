@@ -16,7 +16,7 @@
 # specific language governing permissions and limitations
 # under the License.
 
-if [ -z "$ARTEMIS_INSTANCE" ] ; then
+if [ -z "$ARTEMIS_HOME" ] ; then
 
   ## resolve links - $0 may be a link to ActiveMQ's home
   PRG="$0"
@@ -37,22 +37,15 @@ if [ -z "$ARTEMIS_INSTANCE" ] ; then
     fi
   done
 
-  ARTEMIS_INSTANCE=`dirname "$PRG"`
+  ARTEMIS_HOME=`dirname "$PRG"`
   cd "$saveddir"
 
   # make it fully qualified
-  ARTEMIS_INSTANCE=`cd "$ARTEMIS_INSTANCE/.." && pwd`
+  ARTEMIS_HOME=`cd "$ARTEMIS_HOME/.." && pwd`
 fi
 
-# Load Profile Data
-. "$ARTEMIS_INSTANCE/etc/artemis.profile"
-
 # Set Defaults Properties
-ARTEMIS_LOGGING_CONF="$ARTEMIS_INSTANCE_URI/etc/logging.properties"
-ARTEMIS_DATA_DIR="$ARTEMIS_INSTANCE/data"
-ARTEMIS_LOG_MANAGER=org.jboss.logmanager.LogManager
-
-
+JAVA_ARGS="-XX:+UseParallelGC -XX:+AggressiveOpts -XX:+UseFastAccessorMethods -Xms512M -Xmx1024M"
 CLASSPATH="$ARTEMIS_HOME/lib/artemis-boot.jar"
 
 # OS specific support.
@@ -72,8 +65,8 @@ esac
 
 # For Cygwin, ensure paths are in UNIX format before anything is touched
 if $cygwin ; then
-  [ -n "$ARTEMIS_INSTANCE" ] &&
-    ARTEMIS_INSTANCE=`cygpath --unix "$ARTEMIS_INSTANCE"`
+  [ -n "$ARTEMIS_HOME" ] &&
+    ARTEMIS_HOME=`cygpath --unix "$ARTEMIS_HOME"`
   [ -n "$JAVA_HOME" ] &&
     JAVA_HOME=`cygpath --unix "$JAVA_HOME"`
 fi
@@ -97,33 +90,15 @@ if $cygwin ; then
   CLASSPATH=`cygpath --windows "$CLASSPATH"`
 fi
 
-
-# finding the Log Manager
-LOG_MANAGER=`ls $ARTEMIS_HOME/lib/jboss-logmanager*jar 2>/dev/null`
-
-if [ -z "$LOG_MANAGER" ] ; then
-  # this is the one found when the server was created
-  LOG_MANAGER="$ARTEMIS_HOME/lib/jboss-logmanager-2.0.7.Final-redhat-1.jar"
-fi
-
 # Add prometheus jmx exporter agent
 if [ "$AMQ_PROMETHEUS_AGENT" = "true" ]; then
   echo "Using prometheus jmx exporter agent to collect metrics. Configuration loaded from $ARTEMIS_INSTANCE/etc/"
   PROMEXPORTER_OPTS="-Xbootclasspath/p:$ARTEMIS_INSTANCE/etc -javaagent:$ARTEMIS_INSTANCE/lib/jmx_prometheus_javaagent-0.31.jar=9779:$ARTEMIS_INSTANCE/etc/promconfig.yml"
 fi
 
-exec "$JAVACMD" \
-    $JAVA_ARGS \
-    $PROMEXPORTER_OPTS -Xbootclasspath/a:"$LOG_MANAGER" \
-    -Djava.security.auth.login.config="$ARTEMIS_INSTANCE/etc/login.config" \
-    $ARTEMIS_CLUSTER_PROPS \
+exec "$JAVACMD" $PROMEXPORTER_OPTS $JAVA_ARGS $ARTEMIS_CLUSTER_PROPS \
     -classpath "$CLASSPATH" \
     -Dartemis.home="$ARTEMIS_HOME" \
-    -Dartemis.instance="$ARTEMIS_INSTANCE" \
     -Djava.library.path="$ARTEMIS_HOME/bin/lib/linux-$(uname -m)" \
-    -Djava.io.tmpdir="$ARTEMIS_INSTANCE/tmp" \
-    -Ddata.dir="$ARTEMIS_DATA_DIR" \
-    -Djava.util.logging.manager="$ARTEMIS_LOG_MANAGER" \
-    -Dlogging.configuration="$ARTEMIS_LOGGING_CONF" \
     $DEBUG_ARGS \
     org.apache.activemq.artemis.boot.Artemis "$@"
