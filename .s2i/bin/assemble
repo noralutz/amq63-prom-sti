@@ -11,12 +11,12 @@ SRCLIB=/tmp/src/lib
 
 if [ -d ${PROMCONF} ]; then
   echo "Copying artemis config files from project..."
-  cp -v ${SRCCONF}/* $AMQ_HOME/etc/
+  cp -v ${PROMCONF}/promconfig.yml $AMQ_HOME/etc/
 fi
 
 if [ -d ${ARTCONF} ]; then
   echo "Copying artemis config files from project..."
-  cp -v ${SRCCONF}/* $AMQ_HOME/bin/
+  cp -v ${ARTCONF}/artemis $AMQ_HOME/bin/
 fi
 
 if [ -d ${SRCLIB} ]; then
