@@ -7,3 +7,4 @@ ARTEMIS_INSTANCE=/home/jboss/broker
 #  cp -v ${ARTCONF}/artemis $ARTEMIS_INSTANCE/bin/
 #fi
 exec /usr/local/s2i/run
+echo "I ran!"
