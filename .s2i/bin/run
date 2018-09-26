@@ -1,5 +1,5 @@
 #!/bin/bash
 echo "Before running application"
 
-exec /usr/local/s2i/run
+exec /opt/amq/bin/launch.sh start
 
