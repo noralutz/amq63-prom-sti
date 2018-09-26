@@ -84,16 +84,16 @@ if [ -z "$JAVACMD" ] ; then
   fi
 fi
 
-if $cygwin ; then
-  JAVA_HOME=`cygpath --windows "$JAVA_HOME"`
-  ARTEMIS_HOME=`cygpath --windows "$ARTEMIS_HOME"`
-  CLASSPATH=`cygpath --windows "$CLASSPATH"`
-fi
-
 # Add prometheus jmx exporter agent
 if [ "$AMQ_PROMETHEUS_AGENT" = "true" ]; then
   echo "Using prometheus jmx exporter agent to collect metrics. Configuration loaded from $ARTEMIS_INSTANCE/etc/"
   PROMEXPORTER_OPTS="-Xbootclasspath/p:$ARTEMIS_INSTANCE/etc -javaagent:$ARTEMIS_INSTANCE/lib/jmx_prometheus_javaagent-0.31.jar=9779:$ARTEMIS_INSTANCE/etc/promconfig.yml"
+fi
+
+if $cygwin ; then
+  JAVA_HOME=`cygpath --windows "$JAVA_HOME"`
+  ARTEMIS_HOME=`cygpath --windows "$ARTEMIS_HOME"`
+  CLASSPATH=`cygpath --windows "$CLASSPATH"`
 fi
 
 exec "$JAVACMD" $PROMEXPORTER_OPTS $JAVA_ARGS $ARTEMIS_CLUSTER_PROPS \
