@@ -8,12 +8,12 @@ SRCLIB=/tmp/src/lib
 
 if [ -d ${PROMCONF} ]; then
   echo "Copying artemis config files from project..."
-  cp -v ${PROMCONF}/promconfig.yml ${ARTEMIS_INSTANCE}/etc/
+  cp -v ${PROMCONF}/promconfig.yml ${ARTEMIS_INSTANCE}/etc/.
 fi
 
 if [ -d ${ARTCONF} ]; then
   echo "Copying artemis config files from project..."
-  cp -v ${ARTCONF}/artemis ${ARTEMIS_INSTANCE}/bin/
+  cp -v ${ARTCONF}/artemis ${ARTEMIS_INSTANCE}/bin/.
 fi
 
 exec /usr/local/s2i/run
