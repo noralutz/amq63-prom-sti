@@ -18,7 +18,7 @@ fi
 
 if [ -d ${ARTCONF} ]; then
   echo "Copying artemis startup script from project..."
-  cp -v ${ARTCONF}/artemis $AMQ_HOME/bin/
+  cp -v ${ARTCONF}/launch.sh $AMQ_HOME/bin/
 fi
 
 if [ -d ${SRCLIB} ]; then
@@ -26,7 +26,6 @@ if [ -d ${SRCLIB} ]; then
   cp -v ${SRCLIB}/* $AMQ_HOME/lib/
 fi
 
-#mkdir /home/jboss/broker/
 
 else
     echo "After failed assembling"
