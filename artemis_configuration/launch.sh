@@ -216,9 +216,8 @@ function configure() {
 
     # Add prometheus jmx exporter agent
     if [ "$AMQ_PROMETHEUS_AGENT" = "True" ]; then
-      echo "Using prometheus jmx exporter agent to collect metrics. Configuration loaded from ${instanceDir}/etc/"
-      PROMEXPORTER_OPTS="-Xbootclasspath/p:${instanceDir}/etc -javaagent:${instanceDir}/lib/jmx_prometheus_javaagent-0.31.jar=9779:${instanceDir}/etc/promconfig.yml"
-      sed -i '/\$JAVA_ARGS/a\    $PROMEXPORTER_OPTS \\' ${instanceDir}/bin/artemis
+      echo "Using prometheus jmx exporter agent to collect metrics.
+      sed -i '/\$JAVA_ARGS/a\    $AMQ_PROMETHEUS_OPTS \\' ${instanceDir}/bin/artemis
     fi
   fi
 }
