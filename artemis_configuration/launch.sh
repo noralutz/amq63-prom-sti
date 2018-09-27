@@ -226,7 +226,7 @@ function runServer() {
   instanceDir="${HOME}/${AMQ_NAME}"
 
   configure $instanceDir
-  echo $JAVA_ARGS
+  echo "hi"
   if [ "$1" = "start" ]; then
     echo "Running Broker"
     exec ${instanceDir}/bin/artemis run
