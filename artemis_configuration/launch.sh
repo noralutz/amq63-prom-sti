@@ -216,7 +216,7 @@ function configure() {
 
     # Add prometheus jmx exporter agent
     if [ "$AMQ_PROMETHEUS_AGENT" = "True" ]; then
-      echo "Using prometheus jmx exporter agent to collect metrics.
+      echo "Using prometheus jmx exporter agent to collect metrics."
       sed -i '/\$JAVA_ARGS/a\    $AMQ_PROMETHEUS_OPTS \\' ${instanceDir}/bin/artemis
     fi
   fi
