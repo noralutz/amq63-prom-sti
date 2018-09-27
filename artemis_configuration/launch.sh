@@ -210,9 +210,15 @@ function configure() {
       echo "Updating acceptors for SSL"
       updateAcceptors ${instanceDir}
     fi
-
+    
     $AMQ_HOME/bin/configure_s2i_files.sh ${instanceDir}
     $AMQ_HOME/bin/configure_custom_config.sh ${instanceDir}
+
+    # Add prometheus jmx exporter agent
+    if [ "$AMQ_PROMETHEUS_AGENT" = "true" ]; then
+      echo "Using prometheus jmx exporter agent to collect metrics. Configuration loaded from $ARTEMIS_HOME/etc/"
+      PROMEXPORTER_OPTS="-Xbootclasspath/p:$ARTEMIS_HOME/etc -javaagent:$ARTEMIS_HOME/lib/jmx_prometheus_javaagent-0.31.jar=9779:$ARTEMIS_HOME/etc/promconfig.yml"
+    fi
   fi
 }
 
@@ -226,7 +232,6 @@ function runServer() {
   instanceDir="${HOME}/${AMQ_NAME}"
 
   configure $instanceDir
-  echo "hi"
   if [ "$1" = "start" ]; then
     echo "Running Broker"
     exec ${instanceDir}/bin/artemis run
