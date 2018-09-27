@@ -26,7 +26,7 @@ if [ -d ${SRCLIB} ]; then
   cp -v ${SRCLIB}/* $AMQ_HOME/lib/
 fi
 
-mkdir /home/jboss/broker/
+#mkdir /home/jboss/broker/
 
 else
     echo "After failed assembling"
