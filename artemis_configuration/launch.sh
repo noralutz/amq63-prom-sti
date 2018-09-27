@@ -215,7 +215,7 @@ function configure() {
     $AMQ_HOME/bin/configure_custom_config.sh ${instanceDir}
 
     # Add prometheus jmx exporter agent
-    if [ "$AMQ_PROMETHEUS_AGENT" = "true" ]; then
+    if [ "$AMQ_PROMETHEUS_AGENT" = "True" ]; then
       echo "Using prometheus jmx exporter agent to collect metrics. Configuration loaded from $ARTEMIS_HOME/etc/"
       PROMEXPORTER_OPTS="-Xbootclasspath/p:$ARTEMIS_HOME/etc -javaagent:$ARTEMIS_HOME/lib/jmx_prometheus_javaagent-0.31.jar=9779:$ARTEMIS_HOME/etc/promconfig.yml"
     fi
