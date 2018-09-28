@@ -13,7 +13,7 @@ SRCLIB=/tmp/src/lib
 
 if [ -d ${PROMCONF} ]; then
   echo "Copying prometheus jmx exporter config files from project..."
-  cp -v ${PROMCONF}/promconfig.yml $AMQ_HOME/conf/
+  cp -v ${PROMCONF}/* $AMQ_HOME/conf/
 fi
 
 if [ -d ${ARTCONF} ]; then
